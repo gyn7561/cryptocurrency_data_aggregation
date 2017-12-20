@@ -17,6 +17,16 @@ url_otc_coincola_buy_eth = ""
 url_otc_coincola_sell_eth = ""
 
 
+otc_huobi_buy_btc_ads = []
+otc_huobi_sell_btc_ads = []
+otc_huobi_buy_usdt_ads = []
+otc_huobi_sell_usdt_ads = []
+otc_coincola_buy_btc_ads = []
+otc_coincola_sell_btc_ads = []
+otc_coincola_buy_eth_ads = []
+otc_coincola_sell_eth_ads = []
+
+
 class otc_coin_type(Enum):
 	BTC = 1
 	ETH = 2
