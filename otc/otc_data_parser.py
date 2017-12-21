@@ -2,7 +2,7 @@
 from otc_models import *
 
 # 1 buy, 0 sell, 1 btc, 2 usdt
-def parse_otc_huobi_ad_data(json_str, coin_type, trade_type):
+def parse_otc_huobi_trade_data(json_str):
 	trade_list = []
 	for item in json_str['data']:
 		user_name = item['userName']
