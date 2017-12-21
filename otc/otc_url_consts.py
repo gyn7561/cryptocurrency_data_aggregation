@@ -1,0 +1,16 @@
+# _*_ coding:utf-8 _*_
+
+url_otc_huobi_buy_btc = ""
+url_otc_huobi_sell_btc =""
+url_otc_huobi_buy_usdt = ""
+url_otc_huobi_sell_usdt = ""
+url_otc_coincola_buy_btc = ""
+url_otc_coincola_sell_btc = ""
+url_otc_coincola_buy_eth = ""
+url_otc_coincola_sell_eth = ""
+url_otc_coincola_buy_bch = ""
+url_otc_coincola_sell_bch = ""
+url_otc_okex_buy_btc = ""
+url_otc_okex_sell_btc = ""
+url_otc_okex_buy_eth = ""
+url_otc_okex_sell_eth = ""
