@@ -25,40 +25,51 @@ def on_otc_huobi_sell_usdt_data(json_str):
 	set_otc_huobi_sell_usdt_trades(trades)
 
 def on_otc_coincola_buy_btc_data(json_str):
-	pass
+	trades = parse_otc_coincola_trade_data(json_str)
+	set_otc_coincola_buy_btc_trades(trades)
 
 def on_otc_coincola_sell_btc_data(json_str):
-	pass
+	trades = parse_otc_coincola_trade_data(json_str)
+	set_otc_coincola_sell_btc_trades(trades)
 
 def on_otc_coincola_buy_eth_data(json_str):
-	pass
+	trades = parse_otc_coincola_trade_data(json_str)
+	set_otc_coincola_buy_eth_trades(trades)
 
 def on_otc_coincola_sell_eth_data(json_str):
-	pass
+	trades = parse_otc_coincola_trade_data(json_str)
+	set_otc_coincola_sell_eth_trades(trades)
 
 def on_otc_coincola_buy_bch_data(json_str):
-	pass
+	trades = parse_otc_coincola_trade_data(json_str)
+	set_otc_coincola_buy_bch_trades(trades)
 
 def on_otc_coincola_sell_bch_data(json_str):
-	pass
+	trades = parse_otc_coincola_trade_data(json_str)
+	set_otc_coincola_sell_bch_trades(trades)
 
 def on_otc_okex_buy_btc_data(json_str):
-	pass
+	trades = parse_otc_okex_trade_data(json_str)
+	set_otc_okex_buy_btc_trades(trades)
 
 def on_otc_okex_sell_btc_data(json_str):
-	pass
+	trades = parse_otc_okex_trade_data(json_str)
+	set_otc_okex_sell_btc_trades(trades)
 
 def on_otc_okex_buy_eth_data(json_str):
-	pass
+	trades = parse_otc_okex_trade_data(json_str)
+	set_otc_okex_buy_eth_trades(trades)
 
 def on_otc_okex_sell_eth_data(json_str):
-	pass
+	trades = parse_otc_okex_trade_data(json_str)
+	set_otc_okex_sell_eth_trades(trades)
 
 
 def start_all_spider():
 	spider = otc_spider(url_otc_huobi_buy_btc, 1, on_otc_huobi_buy_btc_data)
 	spider.start()
 
+	'''
 	spider = otc_spider(url_otc_huobi_sell_btc, 1, on_otc_huobi_sell_btc_data)
 	spider.start()
 
@@ -97,7 +108,7 @@ def start_all_spider():
 
 	spider = otc_spider(url_otc_okex_sell_eth, 1, on_otc_okex_sell_eth_data)
 	spider.start()
-
+	'''
 
 
 def quit(signum, frame):

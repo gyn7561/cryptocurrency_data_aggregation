@@ -1,9 +1,9 @@
 # _*_ coding:utf-8 _*_
 
-url_otc_huobi_buy_btc = ""
-url_otc_huobi_sell_btc =""
-url_otc_huobi_buy_usdt = ""
-url_otc_huobi_sell_usdt = ""
+url_otc_huobi_buy_btc = "https://api-otc.huobi.pro/v1/otc/trade/list/public?coinId=1&tradeType=1&currentPage=1&payWay=&country="
+url_otc_huobi_sell_btc ="https://api-otc.huobi.pro/v1/otc/trade/list/public?coinId=1&tradeType=0&currentPage=1&payWay=&country="
+url_otc_huobi_buy_usdt = "https://api-otc.huobi.pro/v1/otc/trade/list/public?coinId=2&tradeType=1&currentPage=1&payWay=&country="
+url_otc_huobi_sell_usdt = "https://api-otc.huobi.pro/v1/otc/trade/list/public?coinId=2&tradeType=0&currentPage=1&payWay=&country="
 url_otc_coincola_buy_btc = ""
 url_otc_coincola_sell_btc = ""
 url_otc_coincola_buy_eth = ""

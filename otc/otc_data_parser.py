@@ -8,7 +8,7 @@ def parse_otc_huobi_trade_data(json_str):
 		user_name = item['userName']
 		price = item['price']
 		min_amount = item['minTradeLimit']
-		max_amount = item['maxTreadLimit']
+		max_amount = item['maxTradeLimit']
 		trade = otc_trade()
 		trade.set_data(user_name, price, min_amount,max_amount)
 		trade_list.append(trade)
@@ -16,5 +16,9 @@ def parse_otc_huobi_trade_data(json_str):
 
 
 
-def parse_otc_coincola_ad_data(json_str):
+def parse_otc_coincola_trade_data(json_str):
+	pass
+
+
+def parse_otc_okex_trade_data(json_str):
 	pass

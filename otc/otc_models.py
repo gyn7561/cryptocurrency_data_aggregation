@@ -32,6 +32,9 @@ class otc_trade(object):
 
 def set_otc_huobi_buy_btc_trades(trades):
 	otc_huobi_buy_btc_trades = trades
+	for item in otc_huobi_buy_btc_trades:
+		ss = "{0} {1}~{2} {3}".format(item.trader, item.min_amount, item.max_amount, item.price)
+		print(ss)
 
 def set_otc_huobi_sell_btc_trades(trades):
 	otc_huobi_sell_btc_trades = trades
