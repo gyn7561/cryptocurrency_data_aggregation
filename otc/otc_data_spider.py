@@ -27,8 +27,9 @@ class otc_spider(object):
 					data = response.json()
 					self.data_callback(data)
 			except BaseException as e:
-				print("Http Faild:",self.url)
-				print(e)
+				#print("Http Faild:",self.url)
+				#print(e)
+				self.data_callback(None)
 
 			#print(self.url)
 			#self.callback()
