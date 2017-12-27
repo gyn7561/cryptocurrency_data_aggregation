@@ -1,11 +1,12 @@
 # _*_ coding:utf-8 _*_
 
 #from otc_models import *
+'''
 import threading
 import otc_models
 import sys, io, os, time
 
-'''
+
 def make_str_with_len(raw_str, length):
 	real_len = len(raw_str.encode('utf-8'))
 	space_count = 0
@@ -56,6 +57,220 @@ def center_str_format(raw_str, width):
 	return ('{:^%d}' % real_width).format(new_str)
 
 
+
+
+
+
+import otc_models
+import threading
+import sys, io, os, time
+from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QApplication
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
+from otc_main import *
+
+class otc_viewer(QWidget):
+	def __init__(self):
+		super().__init__()
+		self.initUI()
+
+		self.t = threading.Thread(target=self.updateUI, name="ViewerUpdate")
+		self.t.setDaemon(True)
+		self.t.start()
+
+	def initUI(self):
+		self.huobi_buy_btc_label = QLabel('Huobi Buy BTC Data')
+		self.__set_label_style(self.huobi_buy_btc_label)
+		self.huobi_sell_btc_label = QLabel('Huobi Sell BTC Data')
+		self.__set_label_style(self.huobi_sell_btc_label)
+		self.huobi_buy_usdt_label = QLabel('Huobi Buy USDT Data')
+		self.__set_label_style(self.huobi_buy_usdt_label)
+		self.huobi_sell_usdt_label = QLabel('Huobi Sell USDT Data')
+		self.__set_label_style(self.huobi_sell_usdt_label)
+		self.coincola_buy_btc_label = QLabel('CoinCola Buy BTC Data')
+		self.__set_label_style(self.coincola_buy_btc_label)
+		self.coincola_sell_btc_label = QLabel('CoinCola Sell BTC Data')
+		self.__set_label_style(self.coincola_sell_btc_label)
+		self.coincola_buy_eth_label = QLabel('CoinCola Buy ETH Data')
+		self.__set_label_style(self.coincola_buy_eth_label)
+		self.coincola_sell_eth_label = QLabel('CoinCola Sell ETH Data')
+		self.__set_label_style(self.coincola_sell_eth_label)
+		self.coincola_buy_bch_label = QLabel('CoinCola Buy BCH Data')
+		self.__set_label_style(self.coincola_buy_bch_label)
+		self.coincola_sell_bch_label = QLabel('CoinCola Sell BCH Data')
+		self.__set_label_style(self.coincola_sell_bch_label)
+		
+		grid = QGridLayout()
+		grid.setSpacing(30)
+		
+
+		grid.addWidget(self.huobi_buy_btc_label,1,0)
+		grid.addWidget(self.huobi_sell_btc_label,1,1)
+		grid.addWidget(self.huobi_buy_usdt_label,1,2)
+		grid.addWidget(self.huobi_sell_usdt_label,1,3)
+		grid.addWidget(self.coincola_buy_btc_label,2,0)
+		grid.addWidget(self.coincola_sell_btc_label,2,1)
+		grid.addWidget(self.coincola_buy_eth_label,2,2)
+		grid.addWidget(self.coincola_sell_eth_label,2,3)
+		grid.addWidget(self.coincola_buy_bch_label,3,0)
+		grid.addWidget(self.coincola_sell_bch_label,3,1)
+
+		self.setLayout(grid)
+
+		self.resize(1920,1080)
+		#self.setGeometry(0,0,1920,1080)
+		self.setWindowTitle('OTC Data Viewer')
+		self.show()
+
+
+	def __set_label_style(self,label):
+		label.setAlignment(Qt.AlignTop)
+		label.setFont(QFont('SansSerif', 12)) 
+
+
+	def __construct_trade_str(self,item):
+		if(item is None):
+			return ""
+
+		trader = left_str_format(item.trader,10)
+		min_amount = item.min_amount
+		max_amount = item.max_amount
+		amount_str = "{0} - {1}".format(int(min_amount),int(max_amount))
+		amount_str = center_str_format(amount_str,20)
+		price = item.price
+		output = "{0} {1} {2}".format(trader,amount_str,price)
+		return output
+
+	def __construct_trade_list_str(self,trade_list):
+		if trade_list is None:
+			return None
+
+		show_str = ""
+		for trade in trade_list:
+			show_str += self.__construct_trade_str(trade)
+			show_str += "\n"
+		return show_str
+
+	def __show_otc_huobi_buy_btc_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_huobi_buy_btc_trades)
+		if show_str is None:
+			show_str = "Huobi Buy BTC Data Faild"
+		else:
+			show_str = "Huobi Buy BTC Data:\n" + show_str
+		self.huobi_buy_btc_label.setText(show_str)
+
+	def __show_otc_huobi_sell_btc_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_huobi_sell_btc_trades)
+		if show_str is None:
+			show_str = "Huobi Sell BTC Data Faild"
+		else:
+			show_str = "Huobi Sell BTC Data:\n" + show_str
+		self.huobi_sell_btc_label.setText(show_str)
+
+	def __show_otc_huobi_buy_usdt_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_huobi_buy_usdt_trades)
+		if show_str is None:
+			show_str = "Huobi Buy USDT Data Faild"
+		else:
+			show_str = "Huobi Buy USDT Data:\n" + show_str
+		self.huobi_buy_usdt_label.setText(show_str)
+
+	def __show_otc_huobi_sell_usdt_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_huobi_sell_usdt_trades)
+		if show_str is None:
+			show_str = "Houbi Sell USDT Data Faild"
+		else:
+			show_str = "Huobi Sell USDT Data:\n" + show_str
+		self.huobi_sell_usdt_label.setText(show_str)
+
+	def __show_otc_coincola_buy_btc_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_coincola_buy_btc_trades)
+		if show_str is None:
+			show_str = "CoinCola Buy BTC Data Faild"
+		else:
+			show_str = "CoinCola Buy BTC Data:\n" + show_str
+		self.coincola_buy_btc_label.setText(show_str)
+
+	def __show_otc_coincola_sell_btc_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_coincola_buy_btc_trades)
+		if show_str is None:
+			show_str = "CoinCola Sell BTC Data Faild"
+		else:
+			show_str = "CoinCola Sell BTC Data:\n" + show_str
+		self.coincola_sell_btc_label.setText(show_str)
+
+	def __show_otc_coincola_buy_eth_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_coincola_buy_eth_trades)
+		if show_str is None:
+			show_str = "CoinCola Buy ETH Data Faild"
+		else:
+			show_str = "CoinCola Buy ETH Data:\n" + show_str
+		self.coincola_buy_eth_label.setText(show_str)
+
+	def __show_otc_coincola_sell_eth_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_coincola_sell_eth_trades)
+		if show_str is None:
+			show_str = "CoinCola Sell ETH Data Faild"
+		else:
+			show_str = "CoinCola Sell ETH Data:\n" + show_str
+		self.coincola_sell_eth_label.setText(show_str)
+
+	def __show_otc_coincola_buy_bch_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_coincola_buy_bch_trades)
+		if show_str is None:
+			show_str = "CoinCola Buy BCH Data Faild"
+		else:
+			show_str = "CoinCola Buy BCH Data:\n" + show_str
+		self.coincola_buy_bch_label.setText(show_str)
+
+	def __show_otc_coincola_sell_bch_trades(self):
+		show_str = self.__construct_trade_list_str(otc_models.otc_coincola_sell_bch_trades)
+		if show_str is None:
+			show_str = "CoinCola Sell BCH Data Faild"
+		else:
+			show_str = "CoinCola Sell BCH Data:\n" + show_str
+		self.coincola_sell_bch_label.setText(show_str)
+
+
+
+	def updateUI(self):
+		while(True):
+			self.__show_otc_huobi_buy_btc_trades()
+			self.__show_otc_huobi_sell_btc_trades()
+			self.__show_otc_huobi_buy_usdt_trades()
+			self.__show_otc_huobi_sell_usdt_trades()
+			self.__show_otc_coincola_buy_btc_trades()
+			self.__show_otc_coincola_sell_btc_trades()
+			self.__show_otc_coincola_buy_eth_trades()
+			self.__show_otc_coincola_sell_eth_trades()
+			self.__show_otc_coincola_buy_bch_trades()
+			self.__show_otc_coincola_sell_bch_trades()
+			time.sleep(1)
+
+
+
+def quit(signum, frame):
+	print("Stop All")
+	sys.exit()
+
+
+
+if __name__ == '__main__':
+	signal.signal(signal.SIGINT, quit)
+	signal.signal(signal.SIGTERM, quit)
+	start_all_spider()
+	app = QApplication(sys.argv)
+	ex = otc_viewer()
+	sys.exit(app.exec_())
+
+
+
+
+
+
+
+
+'''
 
 
 class otc_viewer(object):
@@ -124,13 +339,13 @@ class otc_viewer(object):
 			sys.stdout.write(output + "\n")
 			sys.stdout.flush()
 
-		'''
+	
 		for item in otc_models.otc_huobi_buy_btc_trades:
 			str = "{0} {1}~{2} {3}\n".format(item.trader, item.min_amount, item.max_amount, item.price)
 			#print(str)
 			sys.stdout.write(str)
 			sys.stdout.flush()
-		'''
+	
 		#sys.stdout.write('----------------------------------------------------\n')
 		#sys.stdout.flush()
 
@@ -305,7 +520,7 @@ class otc_viewer(object):
 			self.__clear_screen()
 			self.__construct_out_str()
 			#self.__show_otc_huobi_buy_btc_trades()
-			'''
+
 			self.__show_otc_huobi_sell_btc_trades()
 			self.__show_otc_huobi_buy_usdt_trades()
 			self.__show_otc_huobi_sell_usdt_trades()
@@ -315,6 +530,6 @@ class otc_viewer(object):
 			self.__show_otc_coincola_sell_eth_trades()
 			self.__show_otc_coincola_buy_bch_trades()
 			self.__show_otc_coincola_sell_bch_trades()
-			'''
-
+			
 			time.sleep(2)
+'''

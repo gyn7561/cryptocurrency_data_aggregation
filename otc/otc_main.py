@@ -95,6 +95,8 @@ def start_all_spider():
 
 	spider = otc_spider(url_otc_coincola_sell_bch, 1, on_otc_coincola_sell_bch_data)
 	spider.start()
+
+	print("All Spider Started")
 '''
 	spider = otc_spider(url_otc_okex_buy_btc, 1, on_otc_okex_buy_btc_data)
 	spider.start()
