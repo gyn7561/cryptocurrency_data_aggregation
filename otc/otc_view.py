@@ -94,10 +94,18 @@ class otc_viewer(QWidget):
 		#self.t.setDaemon(True)
 		#self.t.start()
 
+	def setTableItemsHeader(self, table_data, header_text):
+		table_data[0][0].setText(header_text)
+		table_data[1][0].setText("Name")
+		table_data[1][1].setText("Min Amount")
+		table_data[1][2].setText("Max Amount")
+		table_data[1][3].setText("Price")
+
 
 	def createTableItems(self):
 		row = []
-		for x in range(self.data_table_row):
+		#row.append([QTableWidgetItem("Title")])
+		for x in range(0,self.data_table_row):
 			col = []
 			for y in range(self.data_table_col):
 				item = QTableWidgetItem(str(x) + "_" + str(y))
@@ -118,7 +126,12 @@ class otc_viewer(QWidget):
 		for x in range(self.data_table_row):
 			tableWidget.setRowHeight(x,self.data_table_row_height)
 
-		for r in range(self.data_table_row):
+		tableWidget.setRowHeight(0,30)
+
+		tableWidget.setSpan(0,0,1,4)
+
+		tableWidget.setItem(0,0,table_data[0][0])
+		for r in range(1,self.data_table_row):
 			for c in range(self.data_table_col):
 				tableWidget.setItem(r,c, table_data[r][c])
 
@@ -127,21 +140,31 @@ class otc_viewer(QWidget):
 
 
 	def initUI(self):
-		self.data_table_row = 10
+		self.data_table_row = 10 + 2
 		self.data_table_col = 4
 		self.name_col_width = 120
 		self.data_table_row_height = 20
 
 		self.huobi_buy_btc_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.huobi_buy_btc_table_items,"Huobi Buy BTC:")
 		self.huobi_sell_btc_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.huobi_sell_btc_table_items,"Huobi Sell BTC:")
 		self.huobi_buy_usdt_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.huobi_buy_usdt_table_items,"Huobi Buy USDT:")
 		self.huobi_sell_usdt_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.huobi_sell_usdt_table_items,"Huobi Sell USDT:")
 		self.coincola_buy_btc_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.coincola_buy_btc_table_items,"CoinCola Buy BTC:")
 		self.coincola_sell_btc_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.coincola_sell_btc_table_items,"CoinCola Sell BTC:")
 		self.coincola_buy_eth_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.coincola_buy_eth_table_items,"CoinCola Buy ETH:")
 		self.coincola_sell_eth_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.coincola_sell_eth_table_items,"CoinCola Sell ETH:")
 		self.coincola_buy_bch_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.coincola_buy_bch_table_items,"CoinCola Buy BCH:")
 		self.coincola_sell_bch_table_items = self.createTableItems()
+		self.setTableItemsHeader(self.coincola_sell_bch_table_items,"CoinCola Sell BCH:")
 
 		self.huobi_buy_btc_table = self.createTableView(self.huobi_buy_btc_table_items)
 		self.huobi_sell_btc_table = self.createTableView(self.huobi_sell_btc_table_items)
@@ -214,21 +237,21 @@ class otc_viewer(QWidget):
 		'''
 
 		#self.resize(1730,660)
-		self.setFixedSize(1730,730)
+		self.setFixedSize(1729,800)
 		#self.setGeometry(0,0,1920,1080)
 		self.setWindowTitle('OTC Data Viewer')
 		self.show()
 
 	def __clear_table_data(self,table_data):
 
-		for r in range(self.data_table_row):
+		for r in range(2,self.data_table_row):
 			for c in range(self.data_table_col):
 				table_data[r][c].setText("")
 
 
 	def __show_trades_in_table(self,trades, table_data):
 		self.__clear_table_data(table_data)
-		index = 0
+		index = 2
 		for item in trades:
 			table_data[index][0].setText(item.trader)
 			table_data[index][1].setText(str(item.min_amount))
